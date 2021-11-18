@@ -1,0 +1,254 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://images/clock_hour.png" type="Texture" id=1]
+[ext_resource path="res://images/clock_minute.png" type="Texture" id=2]
+[ext_resource path="res://images/clock_bg.png" type="Texture" id=3]
+[ext_resource path="res://images/MontaguSlab-VariableFont_opsz,wght.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Alarm_Finish.gd" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 26
+use_filter = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=7]
+resource_name = "Appear"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Clock:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Clock Ring"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Clock:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 15.0, 0.0, -15.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Clock:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Clock:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "Appear"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "Clock Ring"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=3]
+states/Appear/node = SubResource( 8 )
+states/Appear/position = Vector2( 211, 105 )
+"states/Clock Ring/node" = SubResource( 6 )
+"states/Clock Ring/position" = Vector2( 468, 105 )
+transitions = [ "Appear", "Clock Ring", SubResource( 9 ) ]
+start_node = "Appear"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=4]
+
+[node name="Alarm Finish" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 293.0
+margin_top = 92.0
+margin_right = -311.0
+margin_bottom = -77.0
+rect_pivot_offset = Vector2( 210, 216 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [  ]
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = -3.0
+margin_right = 3.0
+margin_bottom = 3.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.960784, 0.960784, 0.960784, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clock" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 352.0
+rect_rotation = 7.53648
+rect_pivot_offset = Vector2( 210, 176 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Clock"]
+margin_left = 65.0
+margin_right = 354.0
+margin_bottom = 352.0
+alignment = 1
+
+[node name="Clock" type="TextureRect" parent="Clock/HBoxContainer"]
+margin_top = 31.0
+margin_right = 289.0
+margin_bottom = 320.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tongue1" type="TextureRect" parent="Clock/HBoxContainer/Clock"]
+margin_left = 137.0
+margin_top = 167.612
+margin_right = 153.0
+margin_bottom = 252.612
+rect_rotation = -150.0
+rect_pivot_offset = Vector2( 8, 0 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tongue2" type="TextureRect" parent="Clock/HBoxContainer/Clock"]
+margin_left = 139.0
+margin_top = 169.612
+margin_right = 155.0
+margin_bottom = 237.612
+rect_rotation = -180.0
+rect_pivot_offset = Vector2( 8, 0 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stop" type="HBoxContainer" parent="."]
+anchor_top = 0.749
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.181
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Stop"]
+margin_left = 145.0
+margin_right = 275.0
+margin_bottom = 108.0
+alignment = 1
+
+[node name="Stop" type="Button" parent="Stop/VBoxContainer"]
+margin_top = 29.0
+margin_right = 130.0
+margin_bottom = 78.0
+rect_min_size = Vector2( 130, 49 )
+rect_pivot_offset = Vector2( 65, 25 )
+custom_fonts/font = SubResource( 1 )
+text = "Stop"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+playback_process_mode = 0
+anims/Appear = SubResource( 7 )
+"anims/Clock Ring" = SubResource( 2 )
+anims/RESET = SubResource( 5 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 3 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+process_mode = 0
+parameters/playback = SubResource( 4 )
+
+[connection signal="button_down" from="Stop/VBoxContainer/Stop" to="." method="_on_Stop_button_down"]

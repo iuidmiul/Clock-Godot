@@ -4,8 +4,10 @@ extends Button
 onready var background = get_node("Bg")
 
 #animation
-export var finish_anim = false
 onready var anim = get_node("AnimationTree").get("parameters/playback")
+
+#global anim
+
 
 func _physics_process(delta):
 	pass
